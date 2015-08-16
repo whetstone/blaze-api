@@ -1,27 +1,27 @@
-import Sequelize from 'sequelize';
+import { INTEGER, STRING, DATE } from 'sequelize';
 import db from '../config/db.js';
 
 const Users = db.define('users', {
   userId: {
-    type: Sequelize.INTEGER,
+    type: INTEGER,
     primaryKey: true,
     autoIncrement: true,
     field: 'user_id',
   },
   firstName: {
-    type: Sequelize.STRING,
+    type: STRING,
     field: 'first_name',
   },
   lastName: {
-    type: Sequelize.STRING,
+    type: STRING,
     field: 'last_name',
   },
   createdAt: {
-    type: Sequelize.DATE,
+    type: DATE,
     field: 'created_timestamp',
   },
   updatedAt: {
-    type: Sequelize.DATE,
+    type: DATE,
     field: 'updated_timestamp',
   },
 }, {

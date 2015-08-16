@@ -6,7 +6,7 @@ import expressJwt from 'express-jwt';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
-import Users from './models/user';
+import Users from './models/users';
 
 const app = express();
 const router = express.Router();
