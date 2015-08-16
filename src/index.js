@@ -6,6 +6,8 @@ import expressJwt from 'express-jwt';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
+import Users from './models/user';
+
 const app = express();
 const router = express.Router();
 
@@ -22,8 +24,23 @@ app.use(errorhandler());
 
 // API Routes
 app.use(router);
-router.get('/hello', function (req, res, next) {
-  res.status(200).send({ message: 'hi'});
+router.get('/users', function (req, res, next) {
+  Users.sync().then(function () {
+    return Users.findAll().then(function (users) {
+      res.status(200).send(users);
+    });
+  });
+});
+
+router.post('/users', function (req, res, next) {
+  Users.sync().then(function () {
+    return Users.create({
+      firstName: 'Greg',
+      lastName: 'Fiorentino',
+    }).then(function (user) {
+      res.status(201).send(user);
+    });
+  });
 });
 
 // Unauthorized Errors
