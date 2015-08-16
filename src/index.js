@@ -6,7 +6,7 @@ import expressJwt from 'express-jwt';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
-import Users from './models/users';
+import * as usersController from './controllers/users-controller.js';
 
 const app = express();
 const router = express.Router();
@@ -24,24 +24,11 @@ app.use(errorhandler());
 
 // API Routes
 app.use(router);
-router.get('/users', function (req, res, next) {
-  Users.sync().then(function () {
-    return Users.findAll().then(function (users) {
-      res.status(200).send(users);
-    });
-  });
-});
-
-router.post('/users', function (req, res, next) {
-  Users.sync().then(function () {
-    return Users.create({
-      firstName: 'Greg',
-      lastName: 'Fiorentino',
-    }).then(function (user) {
-      res.status(201).send(user);
-    });
-  });
-});
+router.get('/users', usersController.fetchAllUsers);
+router.post('/users', usersController.createUser);
+router.get('/users/:userId', usersController.fetchUser);
+router.patch('/users/:userId', usersController.updateUser);
+router.delete('/users/:userId', usersController.deleteUser);
 
 // Unauthorized Errors
 app.use(function (err, req, res, next) {
