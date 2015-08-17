@@ -22,7 +22,7 @@ const ListPermissions = db.define('list_permissions', {
   freezeTableName: true,
 });
 
-ListPermissions.belongsTo(List);
-ListPermissions.belongsTo(Contact);
+ListPermissions.belongsTo(List, { foreignKey: 'listId' });
+ListPermissions.belongsTo(Contact, { foreignKey: 'contactId' });
 
 export default ListPermissions;

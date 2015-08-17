@@ -17,7 +17,7 @@ export function fetchListsForUser(req, res, next) {
 
   return List
     .findAll({
-      where: { ownerUserId: userId }
+      where: { ownerUserId: userId },
     })
     .then(function (lists) {
       return res.status(200).send(lists);

@@ -49,7 +49,7 @@ const Item = db.define('items', {
   freezeTableName: true,
 });
 
-Item.belongsTo(List);
+Item.belongsTo(List, { foreignKey: 'listId' });
 Item.belongsTo(User, { foreignKey: 'createdByUserId' });
 Item.belongsTo(User, { foreignKey: 'claimedByUserId' });
 
