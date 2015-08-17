@@ -1,5 +1,14 @@
 import Users from '../models/users';
 
+Users
+  .sync()
+  .then(function () {
+    console.log('Table "users" created or already exists');
+  })
+  .catch(function (error) {
+    console.error('Error creating table "users"', error);
+  });
+
 export function fetchAllUsers(req, res, next) {
   return Users
     .findAll()
@@ -103,8 +112,7 @@ export function deleteUser(req, res, next) {
         return res.status(404).send();
       }
 
-      if (!password && (password !== user.password)) {
-        console.log(password, user.password);
+      if (!password || (password !== user.password)) {
         return res.status(401).send();
       }
 
