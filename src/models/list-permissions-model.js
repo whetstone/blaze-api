@@ -1,9 +1,9 @@
 import { INTEGER, DATE, } from 'sequelize';
 import db from '../config/db.js';
-import lists from './lists.js';
-import contacts from './contacts.js';
+import List from './list-model.js';
+import Contact from './contact-model.js';
 
-const listPermissions = db.define('list_permissions', {
+const ListPermissions = db.define('list_permissions', {
   listId: {
     type: INTEGER,
     primaryKey: true,
@@ -22,7 +22,7 @@ const listPermissions = db.define('list_permissions', {
   freezeTableName: true,
 });
 
-listPermissions.belongsTo(lists);
-listPermissions.belongsTo(contacts);
+ListPermissions.belongsTo(List);
+ListPermissions.belongsTo(Contact);
 
-export default listPermissions;
+export default ListPermissions;

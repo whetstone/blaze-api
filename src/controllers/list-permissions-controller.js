@@ -1,3 +1,3 @@
-import listPermissions from '../models/list-permissions.js';
+import ListPermissions from '../models/list-permissions-model.js';
 
-listPermissions.sync();
+ListPermissions.sync({force: true});

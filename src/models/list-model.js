@@ -1,8 +1,8 @@
 import { STRING, INTEGER, DATE, } from 'sequelize';
 import db from '../config/db.js';
-import users from './users.js';
+import User from './user-model.js';
 
-const lists = db.define('lists', {
+const List = db.define('lists', {
   listId: {
     type: INTEGER,
     primaryKey: true,
@@ -24,6 +24,6 @@ const lists = db.define('lists', {
   freezeTableName: true,
 });
 
-lists.belongsTo(users, { foreignKey: 'ownerUserId' });
+List.belongsTo(User, { foreignKey: 'ownerUserId' });
 
-export default lists;
+export default List;

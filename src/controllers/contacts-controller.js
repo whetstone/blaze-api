@@ -1,3 +1,3 @@
-import contacts from '../models/contacts.js';
+import Contact from '../models/contact-model.js';
 
-contacts.sync();
+Contact.sync({force: true});

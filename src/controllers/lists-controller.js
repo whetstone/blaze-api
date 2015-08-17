@@ -1,3 +1,3 @@
-import lists from '../models/lists.js';
+import List from '../models/list-model.js';
 
-lists.sync();
+List.sync({force: true});

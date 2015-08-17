@@ -1,3 +1,3 @@
-import Items from '../models/items.js';
+import Item from '../models/item-model.js';
 
-Items.sync();
+Item.sync({force: true});

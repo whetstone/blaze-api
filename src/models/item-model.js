@@ -1,7 +1,7 @@
 import { INTEGER, STRING, DATE, BOOLEAN, TEXT, DECIMAL } from 'sequelize';
 import db from '../config/db.js';
-import lists from './lists.js';
-import users from './users.js';
+import List from './list-model.js';
+import User from './user-model.js';
 
 const Item = db.define('items', {
   itemId: {
@@ -49,8 +49,8 @@ const Item = db.define('items', {
   freezeTableName: true,
 });
 
-Item.belongsTo(lists);
-Item.belongsTo(users, { foreignKey: 'createdByUserId' });
-Item.belongsTo(users, { foreignKey: 'claimedByUserId' });
+Item.belongsTo(List);
+Item.belongsTo(User, { foreignKey: 'createdByUserId' });
+Item.belongsTo(User, { foreignKey: 'claimedByUserId' });
 
 export default Item;

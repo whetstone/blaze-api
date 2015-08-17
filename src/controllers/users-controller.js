@@ -1,6 +1,6 @@
-import Users from '../models/users';
+import User from '../models/user-model';
 
-Users
+User
   .sync()
   .then(function () {
     console.log('Table "users" created or already exists');
@@ -10,7 +10,7 @@ Users
   });
 
 export function fetchAllUsers(req, res, next) {
-  return Users
+  return User
     .findAll()
     .then(function (users) {
       return res.status(200).send(users);
@@ -30,7 +30,7 @@ export function createUser(req, res, next) {
       allowNotifications,
     } = req.body;
 
-  return Users.create({
+  return User.create({
     firstName,
     lastName,
     userName,
@@ -47,7 +47,7 @@ export function createUser(req, res, next) {
 export function fetchUser(req, res, next) {
   const { userId } = req.params;
 
-  return Users
+  return User
     .findById(userId)
     .then(function (user) {
       if (!user) {
@@ -73,7 +73,7 @@ export function updateUser(req, res, next) {
       allowNotifications,
     } = req.body;
 
-  return Users
+  return User
     .findById(userId)
     .then(function(user) {
       if (!user) {
@@ -105,7 +105,7 @@ export function deleteUser(req, res, next) {
 
   const { password } = req.body;
 
-  return Users
+  return User
     .findById(userId)
     .then(function (user) {
       if (!user) {
