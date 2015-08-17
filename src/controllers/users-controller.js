@@ -1,14 +1,5 @@
 import User from '../models/user-model';
 
-User
-  .sync()
-  .then(function () {
-    console.log('Table "users" created or already exists');
-  })
-  .catch(function (error) {
-    console.error('Error creating table "users"', error);
-  });
-
 export function fetchAllUsers(req, res, next) {
   return User
     .findAll()
