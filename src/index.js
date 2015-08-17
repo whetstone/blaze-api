@@ -34,6 +34,13 @@ router.get('/users/:userId', usersController.fetchUser);
 router.patch('/users/:userId', usersController.updateUser);
 router.delete('/users/:userId', usersController.deleteUser);
 
+router.get('/lists', listsController.fetchAllLists);
+router.get('/users/:userId/lists', listsController.fetchListsForUser);
+router.post('/users/:userId/lists', listsController.createList);
+router.get('/lists/:listId', listsController.fetchList);
+router.patch('/lists/:listId', listsController.updateList);
+router.delete('/lists/:listId', listsController.deleteList);
+
 // Unauthorized Errors
 app.use(function (err, req, res, next) {
   if (err.name === 'UnauthorizedError') {
