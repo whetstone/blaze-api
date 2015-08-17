@@ -1,7 +1,7 @@
 import { INTEGER, STRING, DATE, BOOLEAN } from 'sequelize';
 import db from '../config/db.js';
 
-export default db.define('users', {
+const users = db.define('users', {
   userId: {
     type: INTEGER,
     primaryKey: true,
@@ -46,3 +46,5 @@ export default db.define('users', {
 }, {
   freezeTableName: true,
 });
+
+export default users;

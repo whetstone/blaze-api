@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 
 import * as usersController from './controllers/users-controller.js';
 import * as contactsController from './controllers/contacts-controller.js';
+import * as listsController from './controllers/lists-controller.js';
 
 const app = express();
 const router = express.Router();
