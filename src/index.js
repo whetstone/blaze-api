@@ -11,6 +11,7 @@ import * as contactsController from './controllers/contacts-controller.js';
 import * as listsController from './controllers/lists-controller.js';
 import * as listPermissionsController from './controllers/list-permissions-controller.js';
 import * as itemsController from './controllers/items-controller.js';
+import * as tokenController from './controllers/token-controller.js';
 
 const app = express();
 const router = express.Router();
@@ -47,6 +48,9 @@ router.post('/lists/:listId/items', itemsController.createItem);
 router.get('/items/:itemId', itemsController.fetchItem);
 router.patch('/items/:itemId', itemsController.updateItem);
 router.delete('/items/:itemId', itemsController.deleteItem);
+
+router.post('/token', tokenController.createToken);
+router.delete('/token', tokenController.deleteToken);
 
 // Unauthorized Errors
 app.use(function (err, req, res, next) {
