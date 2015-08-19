@@ -27,8 +27,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(logger('dev'));
 app.use(errorhandler());
 
+function protect() {
+  return expressJwt({
+    secret: 'KILROY',
+    getToken: function (req) {
+      return req.cookies['giftrej-token'];
+    },
+  }).unless({path: ['/token']});
+}
+
 // API Routes
-app.use(router);
+app.use(protect(), router);
 router.get('/users', usersController.fetchAllUsers);
 router.post('/users', usersController.createUser);
 router.get('/users/:userId', usersController.fetchUser);
