@@ -42,7 +42,7 @@ export function fetchContact(req, res, next) {
 }
 
 export function updateContact(req, res, next) {
-  const { user: { userId }, params: { contactId }, body: { approved } } = req;
+  const { user: { userId }, params: { contactId }, body: { active } } = req;
 
   return Contact
     .findById(contactId)
@@ -57,7 +57,7 @@ export function updateContact(req, res, next) {
       }
 
       return contact.update({
-        approved,
+        active,
       })
         .then(contact => {
           return res.status(200).send(contact);

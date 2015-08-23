@@ -63,6 +63,12 @@ router.get('/items/:itemId', itemsController.fetchItem);
 router.patch('/items/:itemId', itemsController.updateItem);
 router.delete('/items/:itemId', itemsController.deleteItem);
 
+router.get('/contacts', contactsController.fetchAllContacts);
+router.post('/contacts', contactsController.createContact);
+router.get('/contacts/:contactId', contactsController.fetchContact);
+router.patch('/contacts/:contactId', contactsController.updateContact);
+router.delete('/contacts/:contactId', contactsController.deleteContact);
+
 router.post('/token', tokenController.createToken);
 router.delete('/token', tokenController.deleteToken);
 
