@@ -9,7 +9,6 @@ import cookieParser from 'cookie-parser';
 import * as usersController from './controllers/users-controller.js';
 import * as contactsController from './controllers/contacts-controller.js';
 import * as listsController from './controllers/lists-controller.js';
-import * as listPermissionsController from './controllers/list-permissions-controller.js';
 import * as itemsController from './controllers/items-controller.js';
 import * as tokenController from './controllers/token-controller.js';
 
@@ -82,7 +81,7 @@ app.use(function (err, req, res, next) {
 const server = app.listen(process.env.PORT || 3000, () => {
   const host = server.address().address;
   const port = server.address().port;
-  console.log(`GiftRej listening at ${host}:${port}`);
+  console.log(`GiftRej API v3 is now serving at ${host}:${port}`);
 });
 
 export default app;
