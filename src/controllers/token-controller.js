@@ -1,5 +1,9 @@
 import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import { promisifyAll } from 'bluebird';
 import User from '../models/user-model.js';
+
+promisifyAll(bcrypt);
 
 const config = {
   secret: 'KILROY',
@@ -7,7 +11,13 @@ const config = {
 };
 
 export function createToken(req, res, next) {
-  const { userName } = req.body;
+  const { body: { userName, password: providedPassword } } = req;
+
+  if (!providedPassword) {
+    return res.status(422).send({
+      message: 'A user must provide a password to authenticate',
+    });
+  }
 
   return User
     .findOne({
@@ -15,19 +25,29 @@ export function createToken(req, res, next) {
         userName,
       },
     })
-    .then(function (user) {
+    .then(user => {
       if (!user) {
         return res.status(404).send();
       }
 
-      const { userId } = user;
+      const { userId, password: foundPassword } = user;
 
-      const token = jwt.sign({userName, userId}, config.secret, {
-        issuer: 'giftrej',
-        expiresInMinutes: config.jwtExpiresInMinutes,
-      });
+      bcrypt.compareAsync(providedPassword, foundPassword)
+        .then(passwordIsValid => {
+          if (!passwordIsValid) {
+            return res.status(401).send();
+          }
 
-      return res.status(201).cookie('giftrej-token', token).send();
+          const token = jwt.sign({userName, userId}, config.secret, {
+            issuer: 'giftrej',
+            expiresInMinutes: config.jwtExpiresInMinutes,
+          });
+
+          return res.status(201).cookie('giftrej-token', token).send();
+        })
+        .catch(error => {
+          return res.status(500).send(error);
+        });
     })
     .catch(function (error) {
       return res.status(500).send(error);

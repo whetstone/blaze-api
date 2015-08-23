@@ -1,9 +1,9 @@
-import User from '../models/user-model';
 import _ from 'underscore';
-import Promise from 'bluebird';
+import { promisifyAll } from 'bluebird';
 import bcrypt from 'bcrypt';
+import User from '../models/user-model';
 
-Promise.promisifyAll(bcrypt);
+promisifyAll(bcrypt);
 
 export function fetchAllUsers(req, res, next) {
   return User
