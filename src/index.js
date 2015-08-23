@@ -51,7 +51,7 @@ router.delete('/users/:userId', usersController.deleteUser);
 
 router.get('/lists', listsController.fetchAllLists);
 router.get('/users/:userId/lists', listsController.fetchListsForUser);
-router.post('/users/:userId/lists', listsController.createList);
+router.post('/lists', listsController.createList);
 router.get('/lists/:listId', listsController.fetchList);
 router.patch('/lists/:listId', listsController.updateList);
 router.delete('/lists/:listId', listsController.deleteList);

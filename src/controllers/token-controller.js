@@ -20,7 +20,9 @@ export function createToken(req, res, next) {
         return res.status(404).send();
       }
 
-      const token = jwt.sign({userName}, config.secret, {
+      const { userId } = user;
+
+      const token = jwt.sign({userName, userId}, config.secret, {
         issuer: 'giftrej',
         expiresInMinutes: config.jwtExpiresInMinutes,
       });

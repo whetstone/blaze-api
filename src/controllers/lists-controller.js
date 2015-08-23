@@ -28,9 +28,7 @@ export function fetchListsForUser(req, res, next) {
 }
 
 export function createList(req, res, next) {
-  const { userId } = req.params;
-
-  const { name } = req.body;
+  const { user: { userId }, body: { name } } = req;
 
   return List.create({
     ownerUserId: userId,
