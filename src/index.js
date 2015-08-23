@@ -33,7 +33,12 @@ function protect() {
     getToken: function (req) {
       return req.cookies['giftrej-token'];
     },
-  }).unless({path: ['/token']});
+  }).unless(function (req) {
+    return (
+      req.originalUrl === '/token' ||
+      req.originalUrl === '/users' && req.method === 'POST'
+    );
+  });
 }
 
 // API Routes
