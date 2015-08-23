@@ -23,6 +23,7 @@ const User = db.define('users', {
   },
   password: {
     type: STRING,
+    allowNull: false,
   },
   resetPasswordToken: {
     type: STRING,

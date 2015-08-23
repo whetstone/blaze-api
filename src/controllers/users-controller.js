@@ -1,72 +1,103 @@
 import User from '../models/user-model';
+import _ from 'underscore';
+import Promise from 'bluebird';
+import bcrypt from 'bcrypt';
+
+Promise.promisifyAll(bcrypt);
 
 export function fetchAllUsers(req, res, next) {
   return User
-    .findAll()
-    .then(function (users) {
+    .findAll({
+      attributes: ['userId', 'firstName', 'lastName', 'email'],
+    })
+    .then(users => {
       return res.status(200).send(users);
     })
-    .catch(function (error) {
+    .catch(error => {
       return res.status(500).send(error);
     });
 }
 
 export function createUser(req, res, next) {
   const {
-      firstName,
-      lastName,
-      userName,
-      email,
-      password,
-      allowNotifications,
-    } = req.body;
+      body: {
+        firstName,
+        lastName,
+        userName,
+        email,
+        password,
+        allowNotifications,
+      },
+    } = req;
 
-  return User.create({
-    firstName,
-    lastName,
-    userName,
-    email,
-    password,
-    allowNotifications,
-  }).then(function (user) {
-    return res.status(201).send(user);
-  }).catch(function (error) {
-    return res.status(415).send(error);
-  });
+  if (!password) {
+    return res.status(422).send({
+      message: 'A new user must provide a password',
+    });
+  }
+
+  bcrypt.hashAsync(password, 16)
+    .then(hash => {
+      return User.create({
+        firstName,
+        lastName,
+        userName,
+        email,
+        password: hash,
+        allowNotifications,
+      }).then(user => {
+        const userWithoutPassword = _.omit(user.toJSON(), 'password');
+        return res.status(201).send(userWithoutPassword);
+      }).catch(error => {
+        return res.status(415).send(error);
+      });
+    })
+    .catch(error => {
+      return res.status(500).send(error);
+    });
 }
 
 export function fetchUser(req, res, next) {
   const { userId } = req.params;
 
   return User
-    .findById(userId)
-    .then(function (user) {
+    .findById(userId, {
+      attributes: ['userId', 'firstName', 'lastName', 'email', 'logInCount', 'lastLoginAt', 'allowNotifications',
+        'createdAt', 'updatedAt',
+      ],
+    })
+    .then(user => {
       if (!user) {
         return res.status(404).send();
       }
 
       return res.status(200).send(user);
     })
-    .catch(function (error) {
+    .catch(error => {
       return res.status(500).send(error);
     });
 }
 
 export function updateUser(req, res, next) {
-  const { userId } = req.params;
-
   const {
-      firstName,
-      lastName,
-      userName,
-      email,
-      password,
-      allowNotifications,
-    } = req.body;
+      params: { userIdParam },
+      user: { userId },
+      body: {
+        firstName,
+        lastName,
+        userName,
+        email,
+        allowNotifications,
+      }
+    } = req;
+
+  if (userId !== userIdParam) {
+    return res.status(403).send();
+  }
 
   return User
-    .findById(userId)
-    .then(function(user) {
+    .findById(userIdParam)
+    .then(user => {
       if (!user) {
         return res.status(404).send();
       }
@@ -76,47 +107,48 @@ export function updateUser(req, res, next) {
         lastName,
         userName,
         email,
-        password,
         allowNotifications,
       })
-        .then(function (user) {
-          return res.status(200).send(user);
+        .then(updatedUser => {
+          const userWithoutPassword = _.omit(updatedUser.toJSON(), 'password');
+          return res.status(201).send(userWithoutPassword);
         })
-        .catch(function (error) {
+        .catch(error => {
           return res.status(500).send(error);
         });
     })
-    .catch(function (error) {
+    .catch(error => {
       return res.status(500).send(error);
     });
 }
 
 export function deleteUser(req, res, next) {
-  const { userId } = req.params;
+  const {
+      params: { userIdParam },
+      user: { userId },
+    } = req;
 
-  const { password } = req.body;
+  if (userId !== userIdParam) {
+    return res.status(403).send();
+  }
 
   return User
     .findById(userId)
-    .then(function (user) {
+    .then(user => {
       if (!user) {
         return res.status(404).send();
       }
 
-      if (!password || (password !== user.password)) {
-        return res.status(401).send();
-      }
-
       return user
         .destroy()
-        .then(function () {
+        .then(() => {
           return res.status(204).send();
         })
-        .catch(function (error) {
+        .catch(error => {
           return res.status(500).send(error);
         });
     })
-    .catch(function (error) {
+    .catch(error => {
       return res.status(500).send(error);
     });
 }

@@ -4,6 +4,8 @@
   "description": "GiftRej CRUD API",
   "main": "index.js",
   "dependencies": {
+    "bcrypt": "^0.8.5",
+    "bluebird": "^2.9.34",
     "body-parser": "^1.13.3",
     "bookshelf": "^0.8.1",
     "cors": "^2.7.1",
@@ -15,7 +17,8 @@
     "morgan": "^1.6.1",
     "pg": "^4.4.1",
     "pg-hstore": "^2.3.2",
-    "sequelize": "^3.5.1"
+    "sequelize": "^3.5.1",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "babel": "^5.8.21",
