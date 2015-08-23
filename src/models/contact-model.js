@@ -1,4 +1,4 @@
-import { INTEGER, DATE, } from 'sequelize';
+import { INTEGER, DATE, BOOLEAN } from 'sequelize';
 import db from '../config/db.js';
 import User from './user-model.js';
 
@@ -13,6 +13,10 @@ const Contact = db.define('contacts', {
   },
   userId: {
     type: INTEGER,
+  },
+  active: {
+    type: BOOLEAN,
+    defaultValue: false,
   },
   createdAt: {
     type: DATE,
