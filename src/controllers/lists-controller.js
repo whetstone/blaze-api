@@ -58,15 +58,17 @@ export function fetchList(req, res, next) {
 }
 
 export function updateList(req, res, next) {
-  const { listId } = req.params;
-
-  const { name } = req.body;
+  const { user: { userId }, params: { listId }, body: { name } } = req;
 
   return List
     .findById(listId)
     .then(function(list) {
       if (!list) {
         return res.status(404).send();
+      }
+
+      if (userId !== list.ownerUserId) {
+        return res.status(403).send();
       }
 
       return list.update({
@@ -85,15 +87,17 @@ export function updateList(req, res, next) {
 }
 
 export function deleteList(req, res, next) {
-  const { listId } = req.params;
-
-  const { password } = req.body;
+  const { user: { userId }, params: { listId } } = req;
 
   return List
     .findById(listId)
     .then(function (list) {
       if (!list) {
         return res.status(404).send();
+      }
+
+      if (userId !== list.ownerUserId) {
+        return res.status(403).send();
       }
 
       return list
