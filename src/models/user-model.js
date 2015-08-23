@@ -15,9 +15,11 @@ const User = db.define('users', {
   },
   userName: {
     type: STRING,
+    allowNull: false,
   },
   email: {
     type: STRING,
+    allowNull: false,
   },
   password: {
     type: STRING,
@@ -36,6 +38,7 @@ const User = db.define('users', {
   },
   allowNotifications: {
     type: BOOLEAN,
+    defaultValue: true,
   },
   createdAt: {
     type: DATE,

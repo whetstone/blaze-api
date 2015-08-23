@@ -11,9 +11,11 @@ const Item = db.define('items', {
   },
   listId: {
     type: INTEGER,
+    allowNull: false,
   },
   createdByUserId: {
     type: INTEGER,
+    allowNull: false,
   },
   claimedByUserId: {
     type: INTEGER,
@@ -32,9 +34,11 @@ const Item = db.define('items', {
   },
   claimed: {
     type: BOOLEAN,
+    defaultValue: false,
   },
   secret: {
     type: BOOLEAN,
+    defaultValue: false,
   },
   priority: {
     type: INTEGER,

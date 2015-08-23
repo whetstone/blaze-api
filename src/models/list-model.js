@@ -10,6 +10,7 @@ const List = db.define('lists', {
   },
   ownerUserId: {
     type: INTEGER,
+    allowNull: false,
   },
   name: {
     type: STRING,

@@ -10,9 +10,11 @@ const Contact = db.define('contacts', {
   },
   contactUserId: {
     type: INTEGER,
+    allowNull: false,
   },
   userId: {
     type: INTEGER,
+    allowNull: false,
   },
   active: {
     type: BOOLEAN,
