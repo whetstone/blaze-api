@@ -1,3 +1,4 @@
+import sendgrid, { Email } from '../config/sendgrid.js';
 import Contact from '../models/contact-model.js';
 
 export function fetchAllContacts(req, res, next) {
@@ -18,9 +19,24 @@ export function createContact(req, res, next) {
     userId,
     contactUserId,
   }).then(contact => {
+    const newContactEmail = new Email({
+      to: 'gtfiorentino@gmail.com',
+      from: 'giftrej@giftrej.com',
+      subject: 'New Contact',
+      text: 'You have a new contact!',
+    });
+
+    sendgrid.sendAsync(newContactEmail)
+      .then(json => {
+        console.log(json);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+
     return res.status(201).send(contact);
   }).catch(error => {
-    return res.status(415).send(error);
+    return res.status(500).send(error);
   });
 }
 
