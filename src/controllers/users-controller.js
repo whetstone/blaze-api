@@ -1,6 +1,7 @@
 import _ from 'underscore';
 import { promisifyAll } from 'bluebird';
 import bcrypt from 'bcrypt';
+import uuid from 'uuid';
 import User from '../models/user-model';
 
 promisifyAll(bcrypt);
@@ -8,7 +9,7 @@ promisifyAll(bcrypt);
 export function fetchAllUsers(req, res, next) {
   return User
     .findAll({
-      attributes: ['userId', 'firstName', 'lastName', 'email'],
+      attributes: ['userId', 'userName', 'firstName', 'lastName', 'email'],
     })
     .then(users => {
       return res.status(200).send(users);
@@ -147,6 +148,40 @@ export function deleteUser(req, res, next) {
         .catch(error => {
           return res.status(500).send(error);
         });
+    })
+    .catch(error => {
+      return res.status(500).send(error);
+    });
+}
+
+export function createResetToken(req, res, next) {
+  const {
+    body: {
+      userName,
+    },
+  } = req;
+
+  return User
+    .findOne({
+      where: {
+        userName,
+      },
+    })
+    .then(user => {
+      if (!user) {
+        return res.status(404).send();
+      }
+
+      return user.update({
+        resetPasswordToken: uuid.v1(),
+        resetPasswordTimestamp: new Date(),
+      })
+      .then(() => {
+        res.status(201).send();
+      })
+      .catch(error => {
+        res.status(500).send(error);
+      });
     })
     .catch(error => {
       return res.status(500).send(error);

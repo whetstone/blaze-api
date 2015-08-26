@@ -16,10 +16,12 @@ const User = db.define('users', {
   userName: {
     type: STRING,
     allowNull: false,
+    unique: true,
   },
   email: {
     type: STRING,
     allowNull: false,
+    unique: true,
   },
   password: {
     type: STRING,
