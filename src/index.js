@@ -32,9 +32,13 @@ function protect() {
       return req.cookies['giftrej-token'];
     },
   }).unless(req => {
+    console.log(req);
+
     return (
       req.originalUrl === '/token' ||
-      req.originalUrl === '/users' && req.method === 'POST'
+      req.originalUrl === '/users' && req.method === 'POST' ||
+      req.originalUrl === '/reset-token' ||
+      req.originalUrl === '/users/:userId/password' && req.method === 'PUT'
     );
   });
 }

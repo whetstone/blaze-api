@@ -10,7 +10,9 @@ export function setUpRoutes(router) {
   router.get('/users/:userId', usersController.fetchUser);
   router.patch('/users/:userId', usersController.updateUser);
   router.delete('/users/:userId', usersController.deleteUser);
+
   router.post('/reset-token', usersController.createResetToken);
+  router.put('/users/:userId/password', usersController.updatePassword);
 
   router.get('/lists', listsController.fetchAllLists);
   router.get('/users/:userId/lists', listsController.fetchListsForUser);
