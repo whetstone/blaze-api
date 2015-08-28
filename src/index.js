@@ -32,13 +32,13 @@ function protect() {
       return req.cookies['giftrej-token'];
     },
   }).unless(req => {
-    console.log(req);
+    const resetPasswordUrlPattern = /^\/users\/([^\\/]+?)\/password(?:\/(?=$))?$/;
 
     return (
       req.originalUrl === '/token' ||
       req.originalUrl === '/users' && req.method === 'POST' ||
       req.originalUrl === '/reset-token' ||
-      req.originalUrl === '/users/:userId/password' && req.method === 'PUT'
+      resetPasswordUrlPattern.test(req.originalUrl) && req.method === 'PUT'
     );
   });
 }
