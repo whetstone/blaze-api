@@ -174,8 +174,25 @@ export function createResetToken(req, res, next) {
         return res.status(404).send();
       }
 
+      const resetToken = uuid.v1();
+
+      const newContactEmail = new Email({
+        to: user.email,
+        from: 'giftrej@giftrej.com',
+        subject: 'GiftRej Password Reset',
+        text: `GiftRej Reset Token: ${resetToken}`,
+      });
+
+      sendgrid.sendAsync(newContactEmail)
+        .then(json => {
+          console.log(json);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+
       return user.update({
-        resetPasswordToken: uuid.v1(),
+        resetPasswordToken: resetToken,
         resetPasswordTimestamp: new Date(),
       })
       .then(() => {
