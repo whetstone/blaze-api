@@ -54,6 +54,11 @@ app.get('*', (req, res, next) => {
   next();
 });
 
+// Server Status
+app.get('/', (req, res, next) => {
+  res.status(200).send({message: 'GiftRej API is running.'});
+});
+
 // API Routes
 app.use(protect(), router);
 setUpRoutes(router);
