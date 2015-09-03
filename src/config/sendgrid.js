@@ -1,4 +1,4 @@
 import sendgrid from 'sendgrid';
 import { promisifyAll } from 'bluebird';
 
-export default promisifyAll(sendgrid('app30383775@heroku.com', 'tqr1ia8h1337'));
+export default promisifyAll(sendgrid(process.env.SENDGRID_USERNAME, process.env.SENDGRID_PASSWORD));
