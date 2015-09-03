@@ -3,6 +3,10 @@
   "version": "3.0.0",
   "description": "GiftRej CRUD API",
   "main": "index.js",
+  "engines": {
+    "iojs": "3.0.0",
+    "npm": "2.13.3"
+  },
   "dependencies": {
     "bcrypt": "^0.8.5",
     "bluebird": "^2.9.34",
