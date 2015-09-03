@@ -45,6 +45,15 @@ function protect() {
   });
 }
 
+// HTTP Redirect to HTTPS
+app.get('*', (req, res, next) => {
+  if (process.env.NODE_ENV === 'production' && req.headers['x-forwarded-proto'] !== 'https') {
+    return res.redirect('https://giftrej-api-v3.herokuapp.com' + req.url);
+  }
+
+  next();
+});
+
 // API Routes
 app.use(protect(), router);
 setUpRoutes(router);
