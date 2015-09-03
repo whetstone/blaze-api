@@ -22,7 +22,6 @@
     "knex": "^0.8.6",
     "moment": "^2.10.6",
     "morgan": "^1.6.1",
-    "nodemon": "^1.4.1",
     "pg": "^4.4.1",
     "pg-hstore": "^2.3.2",
     "sendgrid": "^1.9.2",
@@ -34,10 +33,12 @@
     "babel-eslint": "^4.0.7",
     "eslint": "^1.1.0",
     "eslint-config-airbnb": "0.0.7",
-    "eslint-plugin-react": "^3.2.2"
+    "eslint-plugin-react": "^3.2.2",
+    "nodemon": "^1.4.1"
   },
   "scripts": {
-    "start": "nodemon --watch server ./index.js",
+    "start": "node index.js",
+    "start-dev": "nodemon --watch src index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Greg Fiorentino (gtfiorentino@gmail.com)",
