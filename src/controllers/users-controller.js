@@ -2,7 +2,7 @@ import _ from 'underscore';
 import { promisifyAll } from 'bluebird';
 import bcrypt from 'bcrypt';
 import uuid from 'uuid';
-import sendgrid from '../config/sendgrid.js';
+import sendgrid, { Email } from '../config/sendgrid.js';
 import * as passwordController from './password-controller.js';
 import User from '../models/user-model';
 

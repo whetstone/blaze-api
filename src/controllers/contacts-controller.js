@@ -1,4 +1,3 @@
-import sendgrid, { Email } from '../config/sendgrid.js';
 import Contact from '../models/contact-model.js';
 
 export function fetchAllContacts(req, res, next) {
