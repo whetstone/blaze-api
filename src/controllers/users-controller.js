@@ -39,7 +39,7 @@ export function createUser(req, res, next) {
     });
   }
 
-  bcrypt.hashAsync(password, 16)
+  bcrypt.hashAsync(password, 8)
     .then(hash => {
       return User.create({
         firstName,
@@ -91,7 +91,7 @@ export function updateUser(req, res, next) {
         userName,
         email,
         allowNotifications,
-      }
+      },
     } = req;
 
   if (userId !== userIdParam) {

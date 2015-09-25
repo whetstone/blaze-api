@@ -49,10 +49,29 @@ export function createToken(req, res, next) {
           return res.status(500).send(error);
         });
     })
-    .catch(function (error) {
+    .catch((error) => {
       return res.status(500).send(error);
     });
 
+}
+
+export function fetchTokenStatus(req, res, next) {
+  const { user: { userId } } = req;
+
+  return User
+    .findById(userId, {
+      attributes: ['userId', 'userName', 'firstName', 'lastName', 'email'],
+    })
+    .then(user => {
+      if (!user) {
+        return res.status(404).send();
+      }
+
+      return res.status(200).send(user);
+    })
+    .catch(error => {
+      return res.status(500).send(error);
+    });
 }
 
 export function deleteToken(req, res, next) {

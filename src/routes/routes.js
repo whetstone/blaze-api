@@ -35,5 +35,6 @@ export function setUpRoutes(router) {
   router.delete('/contacts/:contactId', contactsController.deleteContact);
 
   router.post('/token', tokenController.createToken);
+  router.get('/token/status', tokenController.fetchTokenStatus);
   router.delete('/token', tokenController.deleteToken);
 }
