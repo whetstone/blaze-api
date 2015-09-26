@@ -187,20 +187,24 @@ export function createResetToken(req, res, next) {
 
       const resetToken = uuid.v1();
 
-      const newContactEmail = new Email({
+      const resetTokenEmail = new Email({
         to: user.email,
         from: 'giftrej@giftrej.com',
         subject: 'GiftRej Password Reset',
         text: `GiftRej Reset Token: ${resetToken}`,
       });
 
-      sendgrid.sendAsync(newContactEmail)
-        .then(json => {
-          console.log(json);
-        })
-        .catch(error => {
-          console.error(error);
-        });
+      if (process.env.NODE_ENV === 'production') {
+        sendgrid.sendAsync(resetTokenEmail)
+          .then(json => {
+            console.log(`Reset token email sent:${json}`);
+          })
+          .catch(error => {
+            console.error(`Error sending email to ${user.email}: ${error}`);
+          });
+      } else {
+        console.log('Email not enabled in development environment');
+      }
 
       return user.update({
         resetPasswordToken: resetToken,
