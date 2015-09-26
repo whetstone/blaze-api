@@ -3,13 +3,9 @@ import bcrypt from 'bcrypt';
 import { promisifyAll } from 'bluebird';
 import User from '../models/user-model.js';
 import _ from 'underscore';
+import crypto from '../config/crypto.js';
 
 promisifyAll(bcrypt);
-
-const config = {
-  secret: 'KILROY',
-  jwtExpiresInMinutes: 10,
-};
 
 export function createToken(req, res, next) {
   const { body: { userName, password: providedPassword } } = req;
@@ -39,9 +35,9 @@ export function createToken(req, res, next) {
             return res.status(401).send();
           }
 
-          const token = jwt.sign({userName, userId}, config.secret, {
+          const token = jwt.sign({userName, userId}, crypto.secret, {
             issuer: 'giftrej',
-            expiresInMinutes: config.jwtExpiresInMinutes,
+            expiresInMinutes: crypto.jwtExpiresInMinutes,
           });
 
           const userWithoutPassword = _.omit(user.toJSON(), 'password');

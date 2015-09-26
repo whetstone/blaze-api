@@ -1,10 +1,12 @@
+import jwt from 'jsonwebtoken';
 import _ from 'underscore';
 import { promisifyAll } from 'bluebird';
 import bcrypt from 'bcrypt';
 import uuid from 'uuid';
 import sendgrid, { Email } from '../config/sendgrid.js';
 import * as passwordController from './password-controller.js';
-import User from '../models/user-model';
+import User from '../models/user-model.js';
+import crypto from '../config/crypto.js';
 
 promisifyAll(bcrypt);
 
@@ -49,8 +51,17 @@ export function createUser(req, res, next) {
         password: hash,
         allowNotifications,
       }).then(user => {
+        const newUser = user.toJSON();
+
+        // Creating a user issues a token so that the new user is authenticated
+        const token = jwt.sign({userName: newUser.userName, userId: newUser.userId}, crypto.secret, {
+          issuer: 'giftrej',
+          expiresInMinutes: crypto.jwtExpiresInMinutes,
+        });
+
         const userWithoutPassword = _.omit(user.toJSON(), 'password');
-        return res.status(201).send(userWithoutPassword);
+
+        return res.status(201).cookie('giftrej-token', token).send(userWithoutPassword);
       }).catch(error => {
         return res.status(415).send(error);
       });
