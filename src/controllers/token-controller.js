@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import { promisifyAll } from 'bluebird';
 import User from '../models/user-model.js';
+import _ from 'underscore';
 
 promisifyAll(bcrypt);
 
@@ -43,7 +44,9 @@ export function createToken(req, res, next) {
             expiresInMinutes: config.jwtExpiresInMinutes,
           });
 
-          return res.status(201).cookie('giftrej-token', token).send();
+          const userWithoutPassword = _.omit(user.toJSON(), 'password');
+
+          return res.status(201).cookie('giftrej-token', token).send(userWithoutPassword);
         })
         .catch(error => {
           return res.status(500).send(error);
