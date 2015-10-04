@@ -1,7 +1,7 @@
 import Event from '../models/event-model.js';
 
 export function createEvent(req, res, next) {
-  const { body: { event, applicationId } } = req;
+  const { params: { applicationId }, body: { event } } = req;
 
   return Event.create({
     event,
