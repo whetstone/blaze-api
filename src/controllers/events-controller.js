@@ -44,3 +44,16 @@ export function fetchEventsForApplication(req, res, next) {
       return res.status(500).send(error);
     });
 }
+
+export function queryEvents(req, res, next) {
+  const { body: { query } } = req;
+
+  return Event
+    .findAll(query)
+    .then(events => {
+      return res.status(200).send(events);
+    })
+    .catch(error => {
+      return res.status(500).send(error);
+    });
+}

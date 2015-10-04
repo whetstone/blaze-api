@@ -8,4 +8,6 @@ export function setUpRoutes(router) {
 
   router.post('/applications/:applicationId/events', eventsController.createEvent);
   router.get('/events', eventsController.fetchAllEvents);
+
+  router.post('/events/query', eventsController.queryEvents);
 }
