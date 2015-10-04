@@ -42,7 +42,6 @@ app.get('/', (req, res, next) => {
 });
 
 // API Routes
-app.use(protect(), router);
 setUpRoutes(router);
 
 // Unauthorized Errors
