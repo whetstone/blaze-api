@@ -14,9 +14,12 @@ const Event = db.define('events', {
   updatedAt: {
     type: DATE,
   },
-  event: {
+  eventData: {
     type: JSONB,
   },
+  type: {
+    type: STRING,
+  }
 }, {
   freezeTableName: true,
 });

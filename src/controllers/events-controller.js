@@ -2,10 +2,11 @@ import Event from '../models/event-model.js';
 import { io } from '../index.js';
 
 export function createEvent(req, res, next) {
-  const { params: { applicationId }, body: { event } } = req;
+  const { params: { applicationId }, body: { eventData, type } } = req;
 
   return Event.create({
-    event,
+    eventData,
+    type,
     applicationId,
   }).then(event => {
 
