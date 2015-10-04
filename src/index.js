@@ -10,8 +10,8 @@ import cookieParser from 'cookie-parser';
 import { setUpRoutes } from './routes/routes.js';
 
 // Uncomment these lines to synchronize models with the database at startup
-import { syncDb } from './util/sync-db.js';
-syncDb();
+// import { syncDb } from './util/sync-db.js';
+// syncDb();
 
 const app = express();
 const router = express.Router();
@@ -26,24 +26,6 @@ app.use(cors({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(logger('dev'));
 app.use(errorhandler());
-
-function protect() {
-  return expressJwt({
-    secret: 'KILROY',
-    getToken: function (req) {
-      return req.cookies['giftrej-token'];
-    },
-  }).unless(req => {
-    const resetPasswordUrlPattern = /^\/users\/([^\\/]+?)\/password(?:\/(?=$))?$/;
-
-    return (
-      req.originalUrl === '/token' ||
-      req.originalUrl === '/users' && req.method === 'POST' ||
-      req.originalUrl === '/reset-token' ||
-      resetPasswordUrlPattern.test(req.originalUrl) && req.method === 'PUT'
-    );
-  });
-}
 
 // HTTP Redirect to HTTPS
 app.get('*', (req, res, next) => {
