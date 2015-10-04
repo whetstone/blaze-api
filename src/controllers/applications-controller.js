@@ -5,10 +5,10 @@ export function createApplication(req, res, next) {
 
   return Application.create({
     name,
-    version
-  }).then(function (list) {
-    return res.status(201).send(list);
-  }).catch(function (error) {
+    version,
+  }).then(application => {
+    return res.status(201).send(application);
+  }).catch(error => {
     return res.status(415).send(error);
   });
 }
