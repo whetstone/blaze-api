@@ -51,8 +51,6 @@ export function queryEvents(req, res, next) {
   return Event
     .aggregate(field, aggregateFunction, query)
     .then(events => {
-      console.log(events);
-
       return res.status(200).send(events);
     })
     .catch(error => {
