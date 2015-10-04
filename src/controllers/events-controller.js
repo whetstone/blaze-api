@@ -23,3 +23,20 @@ export function fetchAllEvents(req, res, next) {
       return res.status(500).send(error);
     });
 }
+
+export function fetchEventsForApplication(req, res, next) {
+  const { params: { applicationId } } = req;
+
+  return Event
+    .findAll({
+      where: {
+        applicationId,
+      },
+    })
+    .then(events => {
+      return res.status(200).send(events);
+    })
+    .catch(error => {
+      return res.status(500).send(error);
+    });
+}
