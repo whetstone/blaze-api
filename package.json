@@ -1,7 +1,7 @@
 {
-  "name": "giftrej-api-v3",
-  "version": "3.0.0",
-  "description": "GiftRej CRUD API",
+  "name": "whetstone-blaze",
+  "version": "0.0.1",
+  "description": "whetstone blaze backend api",
   "main": "index.js",
   "engines": {
     "iojs": "3.0.0",
