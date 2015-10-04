@@ -1,8 +1,14 @@
 import Contact from '../models/contact-model.js';
 
 export function fetchAllContacts(req, res, next) {
+  const { user: { userId } } = req;
+
   return Contact
-    .findAll()
+    .findAll({
+      where: {
+        userId,
+      },
+    })
     .then(contacts => {
       return res.status(200).send(contacts);
     })
