@@ -2,7 +2,7 @@ import { STRING, INTEGER, DATE, JSONB } from 'sequelize';
 import Event from './event-model.js';
 import db from '../config/db.js';
 
-const Application = db.define('events', {
+const Application = db.define('applications', {
   applicationId: {
     type: INTEGER,
     primaryKey: true,
