@@ -1,5 +1,4 @@
 import { STRING, INTEGER, DATE, JSONB } from 'sequelize';
-import Event from './event-model.js';
 import db from '../config/db.js';
 
 const Application = db.define('applications', {
@@ -20,8 +19,8 @@ const Application = db.define('applications', {
   name: {
     type: STRING,
   },
+}, {
+  freezeTableName: true,
 });
 
-Application.hasMany(Event, { as: 'Events', foreignKey: 'applicationId' });
-
-export default Event;
+export default Application;

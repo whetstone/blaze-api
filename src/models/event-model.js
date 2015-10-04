@@ -1,4 +1,5 @@
-import { INTEGER, DATE, JSONB } from 'sequelize';
+import { STRING, INTEGER, DATE, JSONB } from 'sequelize';
+import Application from './application-model.js';
 import db from '../config/db.js';
 
 const Event = db.define('events', {
@@ -16,6 +17,10 @@ const Event = db.define('events', {
   event: {
     type: JSONB,
   },
+}, {
+  freezeTableName: true,
 });
+
+Event.belongsTo(Application, { foreignKey: 'applicationId', onDelete: 'CASCADE' });
 
 export default Event;
