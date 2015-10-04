@@ -12,3 +12,14 @@ export function createEvent(req, res, next) {
     return res.status(415).send(error);
   });
 }
+
+export function fetchAllEvents(req, res, next) {
+  return Event
+    .findAll()
+    .then(events => {
+      return res.status(200).send(events);
+    })
+    .catch(error => {
+      return res.status(500).send(error);
+    });
+}

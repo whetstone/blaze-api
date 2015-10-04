@@ -6,5 +6,5 @@ export function setUpRoutes(router) {
   router.post('/applications', applicationsController.createApplication);
 
   router.post('/events', eventsController.createEvent);
-
+  router.get('/events', eventsController.fetchAllEvents);
 }
