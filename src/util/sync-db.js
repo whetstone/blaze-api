@@ -5,9 +5,9 @@ import Event from '../models/event-model.js';
 import Application from '../models/application-model.js';
 
 export function syncDb() {
-  Event.sync({force: true})
+  Application.sync({force: true})
     .then(() => {
-      Application.sync({force: true})
+      Event.sync({force: true})
         .catch(error => {
           console.error(error);
         });
