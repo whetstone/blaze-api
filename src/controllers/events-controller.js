@@ -1,10 +1,11 @@
 import Event from '../models/event-model.js';
 
 export function createEvent(req, res, next) {
-  const { body: { event } } = req;
+  const { body: { event, applicationId } } = req;
 
   return Event.create({
-    event
+    event,
+    applicationId,
   }).then(event => {
     return res.status(201).send(event);
   }).catch(error => {
