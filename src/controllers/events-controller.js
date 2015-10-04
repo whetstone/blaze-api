@@ -9,7 +9,7 @@ export function createEvent(req, res, next) {
     applicationId,
   }).then(event => {
 
-    io.emit(event);
+    io.emit('event', event);
 
     return res.status(201).send(event);
   }).catch(error => {
