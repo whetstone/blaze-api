@@ -48,7 +48,7 @@ function protect() {
 // HTTP Redirect to HTTPS
 app.get('*', (req, res, next) => {
   if (process.env.NODE_ENV === 'production' && req.headers['x-forwarded-proto'] !== 'https') {
-    return res.redirect('https://giftrej-api-v3.herokuapp.com' + req.url);
+    return res.redirect('https://whetstone-blaze.herokuapp.com' + req.url);
   }
 
   next();
@@ -56,7 +56,7 @@ app.get('*', (req, res, next) => {
 
 // Server Status
 app.get('/', (req, res, next) => {
-  res.status(200).send({message: 'GiftRej API is running.'});
+  res.status(200).send({message: 'Whetstone Blaze API is running.'});
 });
 
 // API Routes
@@ -73,7 +73,7 @@ app.use(function (err, req, res, next) {
 const server = app.listen(process.env.PORT || 3000, () => {
   const host = server.address().address;
   const port = server.address().port;
-  console.log(`GiftRej API v3 is now serving at ${host}:${port}`);
+  console.log(`WhetstoneBlaze is now serving at ${host}:${port}`);
 });
 
 export default app;
