@@ -46,10 +46,10 @@ export function fetchEventsForApplication(req, res, next) {
 }
 
 export function queryEvents(req, res, next) {
-  const { body: { query, aggregation: { field, aggregateFunction } } } = req;
+  const { body: { aggregation: { field, aggregateFunction, options } } } = req;
 
   return Event
-    .aggregate(field, aggregateFunction, query)
+    .aggregate(field, aggregateFunction, options)
     .then(events => {
       return res.status(200).send(events);
     })
