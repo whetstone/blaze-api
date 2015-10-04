@@ -11,8 +11,8 @@ import { setUpRoutes } from './routes/routes.js';
 import socketIo from 'socket.io';
 
 // Uncomment these lines to synchronize models with the database at startup
-import { syncDb } from './util/sync-db.js';
-syncDb();
+// import { syncDb } from './util/sync-db.js';
+// syncDb();
 
 const app = express();
 const router = express.Router();
