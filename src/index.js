@@ -8,6 +8,7 @@ import expressJwt from 'express-jwt';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import { setUpRoutes } from './routes/routes.js';
+import socketIo from 'socket.io';
 
 // Uncomment these lines to synchronize models with the database at startup
 // import { syncDb } from './util/sync-db.js';
@@ -56,6 +57,12 @@ const server = app.listen(process.env.PORT || 3000, () => {
   const host = server.address().address;
   const port = server.address().port;
   console.log(`WhetstoneBlaze is now serving at ${host}:${port}`);
+});
+
+export const io = socketIo(server);
+
+io.on('connection', socket => {
+  console.log(socket, 'a user connected');
 });
 
 export default app;

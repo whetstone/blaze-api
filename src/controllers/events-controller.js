@@ -1,4 +1,5 @@
 import Event from '../models/event-model.js';
+import { io } from '../index.js';
 
 export function createEvent(req, res, next) {
   const { params: { applicationId }, body: { event } } = req;
@@ -7,6 +8,9 @@ export function createEvent(req, res, next) {
     event,
     applicationId,
   }).then(event => {
+
+    io.emit(event);
+
     return res.status(201).send(event);
   }).catch(error => {
     return res.status(415).send(error);
