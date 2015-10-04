@@ -30,7 +30,7 @@ const Contact = db.define('contacts', {
   freezeTableName: true,
 });
 
-Contact.belongsTo(User, { foreignKey: 'contactUserId' });
+Contact.belongsTo(User, { as: 'ContactUser', foreignKey: 'contactUserId' });
 Contact.belongsTo(User, { foreignKey: 'userId' });
 
 export default Contact;
