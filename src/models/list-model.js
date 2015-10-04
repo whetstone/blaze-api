@@ -25,6 +25,6 @@ const List = db.define('lists', {
   freezeTableName: true,
 });
 
-List.belongsTo(User, { foreignKey: 'ownerUserId' });
+List.belongsTo(User, { as: 'ListOwner', foreignKey: 'ownerUserId' });
 
 export default List;

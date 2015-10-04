@@ -1,5 +1,6 @@
 import Contact from '../models/contact-model.js';
 import User from '../models/user-model.js';
+import List from '../models/list-model.js';
 
 export function fetchAllContacts(req, res, next) {
   const { user: { userId } } = req;
@@ -10,7 +11,11 @@ export function fetchAllContacts(req, res, next) {
         userId,
       },
       include: [
-        { model: User, as: 'ContactUser', attributes: ['userName'] },
+        {
+          model: User,
+          as: 'ContactUser',
+          attributes: ['userName'],
+        },
       ],
     })
     .then(contacts => {
